@@ -1,0 +1,82 @@
+{% extends 'common/news_base.html' %}
+{% load news_filters %}
+
+{% block title %}
+墨喵的新闻窗
+{% endblock %}
+
+{% block head %}
+    <link href="{% static 'css/news/news.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="main">
+		<div class="wrapper">
+			<div class="main-content-wrapper">
+				<div class="list-outer-group">
+					<ul class="list-tab">
+                        {% for catagory in catagories %}
+                            <li><a href="#">{{ catagory.name }}</a></li>
+                        {% endfor %}
+					</ul>
+				</div>
+				<div class="list-inner-group">
+                    {% for news in newses %}
+                        <li>
+                            <div class="content-group">
+                                  <div class="thumbnail-group">
+                                        <a href="#">
+                                            <img src="{{ news.thumbnail }}" class="thumbnail" alt="">
+                                        </a>
+                                  </div>
+                                  <div class="news-group">
+                                        <p class="title">
+                                            {{ news.title }}
+                                        </p>
+                                        <p class="desc">
+                                            {{ news.desc }}
+                                        </p>
+                                  </div>
+                            </div>
+                            <div class="more-group">
+                                <p class="more">
+                                    <span class="category">{{ news.catagory.name}}</span>
+                                    <span class="pub-time">{{ news.pub_time|time_since }}</span>
+                                    <span class="author">{{ news.author.username }}</span>
+                                </p>
+                            </div>
+					    </li>
+                    {% endfor %}
+
+
+{#					<li>#}
+{#						<div class="thumbnail-group">#}
+{#							<a href="#">#}
+{#								<img src="#" alt="">#}
+{#							</a>#}
+{#						</div>#}
+{#						<div class="news-group">#}
+{#							<p class="title">#}
+{#								新闻频道上线啦#}
+{#							</p>#}
+{#							<p class="desc">万众期待的新闻频道上线啦#}
+{#							</p>#}
+{#							<p class="more">#}
+{#								<span class="category">深度报道</span>#}
+{#								<span class="pub-time">1小时前</span>#}
+{#								<span class="author">墨喵</span>#}
+{#							</p>#}
+{#						</div>#}
+{#					</li>#}
+				</div>
+				<div class="load-more-group">
+					<button class="load-more">
+						more
+					</button>
+				</div>
+			</div>
+			<div class="sidebar-wrapper"></div>
+		</div>
+
+	</div>
+{% endblock %}

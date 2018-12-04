@@ -1,0 +1,80 @@
+{% extends 'common/cms_base.html' %}
+
+{% block title %}
+    {% if news %}
+        墨喵的新闻编辑器
+    {% else %}
+        墨喵的新闻发布窗
+    {% endif %}
+{% endblock %}
+
+{% block head %}
+    <script src="{% static 'ueditor/ueditor.config.js' %}"></script>
+    <script src="{% static 'ueditor/ueditor.all.min.js' %}"></script>
+    <script src="{% static 'js/write_news.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                </div>
+                <form action="" role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="title-form">标题</label>
+                            {% if news %}
+                                <input type="text" class="form-control" id="title-form" name="title" value="{{ news.title }}">
+                            {% else %}
+                                <input type="text" class="form-control" id="title-form" name="title">
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="catagory-form">分类</label>
+                            <select name="catagory" id="catagory-form" class="form-control">
+                                {% for catagory in catagories %}
+                                    {% if news and news.catagory_id == catagory.pk%}
+                                        <option value="{{ catagory.pk }}" selected>{{ catagory.name }}</option>
+                                    {% else %}
+                                        <option value="{{ catagory.pk }}">{{ catagory.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc-form">描述</label>
+                            {% if news %}
+                                <input type="text" class="form-control" id="desc-form" name="desc" value="{{ news.desc }}">
+                            {% else %}
+                                <input type="text" class="form-control" id="desc-form" name="desc">
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="thumbnail-form">缩略图</label>
+                            {% if news %}
+                                <input type="text" class="form-control" id="thumbnail-form" name="thumbnail" value="{{ news.thumbnail }}">
+                            {% else %}
+                                <input type="text" class="form-control" id="thumbnail-form" name="thumbnail">
+                            {% endif %}
+                            <span class="input-group-btn">
+                                <label for="" class="btn btn-default btn-file">
+                                     上传图片<input hidden type="file" class="btn btn-default" id="thumbnail-btn">
+                                </label>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="content-form">内容</label>
+{#                            <textarea name="content" id="content-form" cols="30" rows="10" class="form-control"></textarea>#}
+                            <script id="editor" type="text/plain">{{ news.content|safe }}</script>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button id='submit-btn' class="btn btn-primary " data-news-id="{{ news.pk }}">发布新闻</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'common/news_base.html' %}
+{% load news_filters %}
+
+{% block title %}
+墨喵的晨报
+{% endblock %}
+
+{% block head %}
+    <link href="{% static 'css/news/news-detail.min.css' %}" rel="stylesheet">
+
+    <script src="{% static 'arttemplate/template-web.js' %}"></script>
+    <script src="{% static 'js/news_detail.min.js' %}"></script>
+<script type="text/html" id="comment-item">
+{% verbatim %}
+<li>
+    <div class="comment-info">
+        <img src="#" alt="" class="avatar">
+        <span class="author">{{ comment.author.username }}</span>
+        <span class="pub-time">{{ comment.pub_time|timeSince }}</span>
+    </div>
+    <p class="comment-content">{{ comment.content }}</p>
+</li>
+{% endverbatim %}
+</script>
+{% endblock %}
+
+{% block body %}
+    <div class="main">
+		<div class="wrapper">
+			<div class="main-content-wrapper">
+				<div class="news-wrapper">
+					<h1 class="title">{{ news.title }}</h1>
+					<div class="news-info">
+						<div class="infoGroup">
+							<span class="author">{{ news.author.username }}</span>
+							<span class="pubTime">{{ news.pub_time | timesince }}</span>
+							<span class="category">{{ news.catagory.name }}</span>
+						</div>
+						<div class="shareGroup">
+							<span>分享至:</span>
+							<a href="#" class="weixin">
+								<img src="{% static 'images/微信.min.png' %}" alt="">
+							</a>
+							<a href="#" class="weibo">
+								<img src="{% static 'images/微博.min.png' %}" alt="">
+							</a>
+						</div>
+					</div>
+
+					<article class="article">
+						{{ news.content | safe }}
+					</article>
+				</div>
+                <div class="comment-wraper">
+                    <h3 class="title">文章评论</h3>
+                    <textarea name="comment" class="comment-textarea logined-textarea" id="" placeholder="立即登陆，参与评论" ></textarea>
+                    <div class="submit-btn-group" >
+                        <button class="submit-btn" data-news-id="{{ news.pk }}">立即评论</button>
+                    </div>
+                </div>
+                <ul class="comment-list">
+                    {% for comment in news.comments.all %}
+                        <li>
+                        <div class="comment-info">
+                            <img src="#" alt="" class="avatar">
+                            <span class="author">{{ comment.author.username }}</span>
+                            <span class="pub-time">{{ comment.pub_time|time_since}}</span>
+                        </div>
+                        <p class="comment-content">{{ comment.content }}</p>
+                    </li>
+                    {% endfor %}
+                    </li>
+                </ul>
+			</div>
+			<div class="sidebar-wrapper"></div>
+		</div>
+	</div>
+{% endblock %}

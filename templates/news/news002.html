@@ -1,0 +1,88 @@
+{% extends 'common/news_base.html' %}
+{% load news_filters %}
+
+{% block title %}
+    墨喵的晨报
+{% endblock %}
+
+{% block head %}
+    <link href="{% static 'css/news/news.min.css' %}" rel="stylesheet">
+    <script src="{% static 'arttemplate/template-web.js' %}"></script>
+    <script src="{% static 'js/news_index.min.js' %}"></script>
+
+<script type="text/html" id="news-item">
+{% verbatim %}
+{{ each newses news index }}
+<li>
+    <div class="thumbnail-group">
+        <a href="/news/{{ news.id }}">
+            <img src="{{ news.thumbnail }}" alt="">
+        </a>
+    </div>
+    <div class="news-group">
+        <p class="title">
+            <a href="/news/{{ news.id }}">{{ news.title }}</a>
+        </p>
+        <p class="desc">
+            {{ news.desc }}
+        </p>
+        <p class="more">
+            <span class="catagory">{{ news.catagory.name }}</span>
+            <span class="pub-time">{{ news.pub_time | timeSince }}</span>
+            <span class="author">{{ news.author.username }}</span>
+        </p>
+    </div>
+</li>
+{{ /each }}
+{% endverbatim %}
+</script>
+{% endblock %}
+
+{% block body %}
+    <div class="main">
+		<div class="wrapper">
+			<div class="main-content-wrapper">
+				<div class="list-outer-group">
+					<ul class="list-tab">
+                        <li class="active" data-catagory = '0'>
+                            <a href="javascript:void(0);">最新资讯</a>
+                        </li>
+                        {% for catagory in catagories %}
+                            <li data-catagory = "{{ catagory.pk }}"><a href="javascript:void(0)">{{ catagory.name }}</a></li>
+                        {% endfor %}
+					</ul>
+				</div>
+				<div class="list-inner-group">
+                    {% for news in newses %}
+                       <li>
+                            <div class="thumbnail-group">
+                                <a href="{% url 'news:news_details' news_id=news.pk%}">
+                                    <img src="{{ news.thumbnail }}" alt="">
+                                </a>
+                            </div>
+                            <div class="news-group">
+                                <p class="title">
+                                    <a href="{% url 'news:news_details' news_id=news.pk %}">{{ news.title }}</a>
+                                </p>
+                                <p class="desc">
+                                    {{ news.desc }}
+                                </p>
+                                <p class="more">
+                                    <span class="catagory">{{ news.catagory.name }}</span>
+                                    <span class="pub-time">{{ news.pub_time | time_since }}</span>
+                                    <span class="author">{{ news.author.username }}</span>
+                                </p>
+                            </div>
+                        </li>
+                    {% endfor %}
+				</div>
+				<div class="load-more-group">
+					<button class="load-more" id='load-more-btn'>
+						more
+					</button>
+				</div>
+			</div>
+			<div class="sidebar-wrapper"></div>
+		</div>
+	</div>
+{% endblock %}

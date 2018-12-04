@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>{% block title %}
+        {% endblock %}</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+
+<link rel="stylesheet" href="{% static "css/common/auth.min.css" %}">
+
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/message.min.js' %}"></script>
+<script src="{% static 'js/auth.min.js' %}"></script>
+<script src="{% static 'js/catAjax.min.js' %}"></script>
+
+<script src=""></script>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+	<header class="header">
+		<div class="container">
+			<div class="logoCol">
+				<div class="logobox">
+					<a href="../../templates/index.html">
+						<img src="{% static 'images/logo.min.jpg' %}" alt="">
+						<span>墨喵的平行时空</span>
+					</a>
+				</div>
+				<div class="wishbox">
+					<small class="wish">山高水长&#8194&#8194万古长青&#8194&#8194此刻无法承诺&#8194&#8194就让时光见证
+					</small>
+				</div>
+			</div>
+			<div class="selectorCol">
+				<ul class="nav">
+					<li>
+						<a href="../index.html">
+							<b>首页</b>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<b>比价</b>
+						</a>
+					</li>
+					<li>
+						<a href="news/">
+							<b>新闻</b>
+						</a>
+					</li>
+					<li>
+						<a href="/">
+							<b>微博</b>
+						</a>
+					</li>
+				</ul>
+                <div class="authwrapper">
+					<div class="authlogo">
+						<img src="#" alt="">
+					</div>
+                    {% if user.is_authenticated %}
+                        <span class="authenticated">{{ user.username }}</span>
+                        <div class="user-more-box">
+                            <i class="triangle"></i>
+                            {% if user.is_staff %}
+                                <a href="{% url 'cms:cms_index' %}">管理系统</a>
+                            {% endif %}
+                            <a href="{% url 'catauth:logout' %}">退出登录</a>
+                    </div>
+                    {% else %}
+					    <span id='signin-btn' style="cursor: pointer">登陆 /</span>
+					    <span id="signup-btn" style="cursor: pointer">注册</span>
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+	</header>
+    {% block body %}
+    
+    {% endblock %}
+
+	<footer class="footer">
+		<div class="topGroup">
+			<div class="txt-left"></div>
+			<div class="logobox">
+				<img src="{% static 'images/cat (1).min.png' %}" alt="">
+				<p class="welcome">欢迎来到墨喵的世界</p>
+			</div>
+			<div class="txt-right">
+				<h2>声明:</h2>
+				<p>本网页所有内容仅供学习交流所需</p>
+				<p>本网页参考许多网上资料摸索糅合而成</p>
+				<p>感谢w3c，runoob，csdn，stackoverflow上的相关资料</p>
+				<p>欢迎各位游客留下您的宝贵意见</p>
+			</div>
+
+
+		</div>
+		<div class="bottomGroup">
+
+		</div>
+	</footer>
+
+    <div class="mask-wrapper">
+		<div class="auth-wrapper">
+			<div class="close-group">
+				<div class="close-btn">
+					<img src="{% static 'images/close.min.png' %}" alt="">
+				</div>
+			</div>
+			<div class="auth-inner-wrapper">
+				<div class="scroll-wrapper">
+					<div class="signin-group auth-group">
+						<div class="top-group">
+							<span class="title">请登录</span>
+							<a href="javascript: void(0);" class="switch">立即注册></a>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" class="form-control" name='telephone' placeholder="请输入手机号码">
+							</div>
+							<div class="input-group">
+								<input type="text" class="form-control" name='password' placeholder="请输入密码" >
+							</div>
+							<div class="input-group">
+								<label class='remeber-laber'>
+									<input type="checkbox" name='remeber' value='1' >
+									记住我
+								</label>
+							</div>
+							<div class="input-group">
+								<input type="submit" class="submit-btn" value='立即登录'>
+							</div>
+						</div>
+					</div>
+					<div class="signup-group auth-group">
+						<div class="top-group">
+							<span class="title">请注册</span>
+							<a href="javascript: void(0);" class="switch">立即登录></a>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" class="form-control" name='telephone'placeholder="请输入手机号码">
+							</div>
+
+							<div class="input-group">
+								<input type="text" class="form-control" name='username'placeholder="请输入用户名">
+							</div>
+
+							<div class="input-group">
+								<input type="text" class="form-control" name='password1'placeholder="请输入密码" >
+							</div>
+							<div class="input-group">
+								<input type="text" class="form-control" name='password2'placeholder="请输入密码" >
+							</div>
+
+							<div class="input-group">
+								<div class="short-input-group">
+									<input type="text" name='img_captcha'  class="form-control"
+									placeholder="请输入图形验证码" >
+								</div>
+								<div class="input-group-addon">
+									<img src="{% url 'catauth:img_captcha' %}" alt="" class="img-captcha-btn" style="cursor: pointer">
+								</div>
+							</div>
+
+							<div class="input-group">
+								<div class="short-input-group">
+									<input type="text" name='sms_captcha'  class="form-control"
+									placeholder="请输入短信验证码" >
+								</div>
+								<div class="input-group-addon">
+									<span class="sms-captcha-btn">发送验证码</span>
+								</div>
+							</div>
+
+							<div class="input-group">
+								<input type="submit" class="submit-btn" value='立即注册'>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
