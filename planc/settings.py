@@ -146,6 +146,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR,'static_dist')
+
 AUTH_USER_MODEL = 'catauth.Front_User'
 
 MEDIA_URL = '/media/'
